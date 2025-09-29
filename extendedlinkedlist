@@ -1,0 +1,62 @@
+#silver-engine
+from linkedlist import LinkedList, Node
+
+class ReversableLinkedList(LinkedList):
+    'Reversable linkedlist.'
+    def reverse(self):
+        'Reverse the linkedlist in o(n).'
+        prev, cur = None, self._head
+        while cur:
+            nxt = cur.link
+            cur.link = prev
+            prev = cur
+            cur = nxt
+        self._head, self._tail = self._tail, self._head
+
+
+class SortedLinkedList(LinkedList):
+    "Linkedlist that maintains order."
+    def add_first(self, item):
+        'adds first item'
+        raise NotImplementedError(fUse add_sorted({item}) instead')
+        'Adds last item.'
+        raise NotImplementedError(f'Use add_sorted({item}) instead')
+
+    def add_sorted(self, item):
+        'Insert item into list while keeping it sorted.'
+        new_node = Node(item)
+        if self._head is None or item <= self._head.item:
+            new_node.link = self._head
+            self._head = new_node
+            if self._tail is None:
+                self._tail = new_node
+            self._size += 1
+            return
+        prev, cur = None, self._head
+        while cur and cur.item < item:
+            prev, cur = cur, cur.link
+        prev.link = new_node
+        new_node.link = cur
+        if cur is None:
+            self._tail = new_node
+        self._size += 1
+
+
+class UniqueLinkedList(LinkedList):
+    'Linkedlist that removes duplicates.'
+    def remove_dups(self):
+        'Removes duplicates.'
+        seen = {}
+        prev, cur = None, self._head
+        while cur:
+            if cur.item in seen:
+                seen[cur.item] += 1
+                prev.link = cur.link
+                if cur is self._tail:
+                    self._tail = prev
+                self._size -= 1
+                cur = cur.link
+            else:
+                seen[cur.item] = 0
+                prev, cur = cur, cur.link
+        return seen
