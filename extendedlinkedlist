@@ -19,6 +19,8 @@ class SortedLinkedList(LinkedList):
     def add_first(self, item):
         'adds first item'
         raise NotImplementedError(fUse add_sorted({item}) instead')
+
+    def add_last(self, item):
         'Adds last item.'
         raise NotImplementedError(f'Use add_sorted({item}) instead')
 
